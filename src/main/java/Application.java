@@ -28,7 +28,7 @@ public class Application {
         }
 
         ExcelWriter excelWriter = new ExcelWriter();
-        String filepath = "%d %s";
+        String filepath = "%d_%s";
         if (mode.equals("DEV")) {
             filepath += "_dev";
         }
