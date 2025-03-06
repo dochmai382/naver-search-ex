@@ -37,5 +37,9 @@ build/
 ### Mac OS ###
 .DS_Store
 
-/.idea/sonarlint/
+### DotEnv
 .env
+
+### 파일 정리
+/.idea/sonarlint/
+*_dev.xlsx
