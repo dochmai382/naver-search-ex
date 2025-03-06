@@ -1,5 +1,7 @@
 package util.logger;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -9,7 +11,21 @@ public class MyLogger {
 
     public MyLogger(Class<?> clazz) {
         this.logger = Logger.getLogger(clazz.getName());
-        logger.setLevel(Level.INFO);
+//        logger.setLevel(Level.INFO);
+
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        String mode = dotenv.get("MODE");
+        if (mode.isBlank()) {
+            throw new RuntimeException("mode is missing");
+        }
+        switch (mode) {
+            case "DEV":
+                this.logger.setLevel(Level.INFO);
+                break;
+            case "PROD":
+                this.logger.setLevel(Level.SEVERE);
+                break;
+        }
     }
 
     public void info(String msg) {
