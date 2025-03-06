@@ -1,4 +1,5 @@
 package service;
 
-public class SearchService {
+public interface SearchService {
+    String searchByKeyword(String searchKeyword);
 }
