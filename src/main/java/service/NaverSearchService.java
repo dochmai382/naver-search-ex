@@ -1,11 +1,16 @@
 package service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import model.dto.APIClientParam;
+import model.dto.NaverSearchResult;
+import model.dto.NaverSearchResultItem;
 import util.api.APIClient;
 import util.logger.MyLogger;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class NaverSearchService implements SearchService {
     private final String clientID;
@@ -30,19 +35,13 @@ public class NaverSearchService implements SearchService {
     }
 
     @Override
-    public String searchByKeyword(String keyword) {
+    public List<NaverSearchResultItem> searchByKeyword(String keyword) throws IOException, InterruptedException {
         logger.info("searchByKeyword: " + keyword);
         HashMap<String, String> body = new HashMap<>();
         APIClientParam param = new APIClientParam("https://openapi.naver.com/v1/search/news.json?query=%s".formatted(keyword), "GET", body
                 , "X-Naver-Client-Id", clientID, "X-Naver-Client-Secret", clientSecret);
 
-        String result = "";
-        try {
-            result = apiClient.callAPI(param);
-            return result;
-        } catch (Exception e) {
-            logger.severe(e.getMessage());
-        }
-        return result;
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(apiClient.callAPI(param), NaverSearchResult.class).items();
     }
 }

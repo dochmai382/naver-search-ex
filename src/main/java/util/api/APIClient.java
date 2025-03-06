@@ -1,6 +1,5 @@
 package util.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dto.APIClientParam;
 import util.logger.MyLogger;

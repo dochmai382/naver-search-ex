@@ -1,5 +1,10 @@
 package service;
 
+import model.dto.NaverSearchResultItem;
+
+import java.io.IOException;
+import java.util.List;
+
 public interface SearchService {
-    String searchByKeyword(String searchKeyword);
+    List<NaverSearchResultItem> searchByKeyword(String searchKeyword) throws IOException, InterruptedException;
 }
